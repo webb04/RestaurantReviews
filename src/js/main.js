@@ -33,13 +33,17 @@ $('.cuisine').on('click', function(e) {
 // get current location and use radius to work out how close they are
 let fetchRestaurants = (selectedLocation, selectedCuisine) => {
   console.log(selectedLocation, selectedCuisine);
+  document.getElementById('results').innerHTML = '<img src="/dist/img/ring.svg"/>';
   var request = '/api/'+ selectedLocation + '?cuisine=' + selectedCuisine;
   fetch(request).then(function(response) {
     return response.json();
   }).then(function(data) {
-    var data = data.body;
-    console.log(JSON.parse(data));
-    // data.map(x => stations.push(x.stationName));
-    // stations = stations.map(x => x.toLowerCase());
+    var data = JSON.parse(data.body);
+    var restaurants = data.restaurants;
+    document.getElementById('results').innerHTML = '';
+    restaurants.map(x => {
+      document.getElementById('results').innerHTML += `<div class="restaurant">${x.restaurant.name}</div>`;
+      console.log(x.restaurant.name)
+    });
   }).catch(function(error) { });
 }
