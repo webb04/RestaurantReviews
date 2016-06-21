@@ -42,8 +42,42 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
     var restaurants = data.restaurants;
     document.getElementById('results').innerHTML = '';
     restaurants.map(x => {
-      document.getElementById('results').innerHTML += `<div class="restaurant">${x.restaurant.name}</div>`;
-      console.log(x.restaurant.name)
+      document.getElementById('results').innerHTML += `<div class="restaurant"><div class="restaurant-image" id="${x.restaurant.featured_image}"></div>
+    <div class="restaurant-name">${x.restaurant.name}</div>
+    <div class="rating" style="background: #${x.restaurant.user_rating.rating_color}">${x.restaurant.user_rating.aggregate_rating}</div>
+      <div>${x.restaurant.user_rating.votes} votes</div>
+      <div class="new-review" name="${x.restaurant.name}">Add Review</div>`;
+      document.getElementById(x.restaurant.featured_image).style.backgroundImage = `url('${x.restaurant.featured_image}')`
+      console.log(x.restaurant);
     });
-  }).catch(function(error) { });
+
+    $('.new-review').on('click', function(e) {
+      console.log(e.target.getAttribute('name'));
+      $( 'div[name="'+e.target.getAttribute('name')+'"]' ).parent().append(`<div class="ratings-wrapper">
+      <div class="rating-value">0</div>
+      <div class="rating-value">1</div>
+      <div class="rating-value">2</div>
+      <div class="rating-value">3</div>
+      <div class="rating-value">4</div>
+      <div class="rating-value">5</div>
+      <br>
+      <textarea class="comment" name="comment" cols="40" rows="5"></textarea>
+      </div>`);
+    });
+
+  }).catch(function(error) {
+    $('.new-review').on('click', function(e) {
+      console.log(e.target.getAttribute('name'));
+      $( 'div[name="'+e.target.getAttribute('name')+'"]' ).parent().append(`<div class="ratings-wrapper">
+      <div class="rating-value">0</div>
+      <div class="rating-value">1</div>
+      <div class="rating-value">2</div>
+      <div class="rating-value">3</div>
+      <div class="rating-value">4</div>
+      <div class="rating-value">5</div>
+      <br>
+      <textarea class="comment" name="comment" cols="40" rows="5"></textarea>
+      </div>`);
+    });
+  });
 }

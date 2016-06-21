@@ -61,6 +61,73 @@ header {
   text-align: center;
 }
 
+.restaurant-image {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  position: relative;
+  border-radius: 100px;
+  margin: auto;
+  background-color: darkslategrey;
+  background-position: 50% 50%;
+}
+
+.restaurant-name {
+  margin-top: 20px;
+  font-size: 3em;
+}
+
+.rating {
+  width: 200px;
+  margin: auto;
+  color: white;
+  font-size: 2em;
+  padding: 5px;
+  border-radius: 3px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.new-review {
+  margin-top: 20px;
+  border: solid 1px rgba(119,136,153,0.2);
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+}
+
+.new-review:hover {
+  background: darkslategrey;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.ratings-wrapper {
+    margin-top: 20px;
+}
+
+.rating-value {
+  display: inline-block;
+  margin: auto;
+  padding: 10px;
+  background: darkslategrey;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.comment {
+  border: solid 1px rgba(119,136,153,0.2);
+  width: 400px;
+  margin-top: 20px;
+}
+
+textarea {
+  resize: none;
+}
+
 .london {
     background-image: url('/dist/img/London.jpg');
     background-size: cover;
