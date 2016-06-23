@@ -30,7 +30,25 @@ $('.cuisine').on('click', function(e) {
   if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
 });
 
-// get current location and use radius to work out how close they are
+$('.location').keypress(function(e){
+    if(e.which == 13){//Enter key pressed
+      selectedLocation = $(this).attr('class').split(" ")[1];
+      $('.location').removeClass('selected');
+      $(this).addClass('selected');
+      if (selectedCuisine) fetchRestaurants(selectedLocation, selectedCuisine);
+    }
+  });
+
+  $('.cuisine').keypress(function(e){
+      if(e.which == 13){//Enter key pressed
+        selectedCuisine = $(this).attr('class').split(" ")[1];
+        selectedCuisine = cuisineID[selectedCuisine];
+        $('.cuisine').removeClass('selected-cuisine');
+        $(this).addClass('selected-cuisine');
+        if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
+      }
+    });
+
 let fetchRestaurants = (selectedLocation, selectedCuisine) => {
   console.log(selectedLocation, selectedCuisine);
   document.getElementById('results').innerHTML = '<img src="/dist/img/ring.svg"/>';
@@ -54,12 +72,12 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
     $('.new-review').on('click', function(e) {
       console.log(e.target.getAttribute('name'));
       $( 'div[name="'+e.target.getAttribute('name')+'"]' ).parent().append(`<div class="ratings-wrapper">
-      <div class="rating-value">0</div>
-      <div class="rating-value">1</div>
-      <div class="rating-value">2</div>
-      <div class="rating-value">3</div>
-      <div class="rating-value">4</div>
-      <div class="rating-value">5</div>
+      <div class="rating-value" tabindex="0">0</div>
+      <div class="rating-value" tabindex="0">1</div>
+      <div class="rating-value" tabindex="0">2</div>
+      <div class="rating-value" tabindex="0">3</div>
+      <div class="rating-value" tabindex="0">4</div>
+      <div class="rating-value" tabindex="0">5</div>
       <br>
       <textarea class="comment" name="comment" cols="40" rows="5"></textarea>
       </div>`);
@@ -69,12 +87,12 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
     $('.new-review').on('click', function(e) {
       console.log(e.target.getAttribute('name'));
       $( 'div[name="'+e.target.getAttribute('name')+'"]' ).parent().append(`<div class="ratings-wrapper">
-      <div class="rating-value">0</div>
-      <div class="rating-value">1</div>
-      <div class="rating-value">2</div>
-      <div class="rating-value">3</div>
-      <div class="rating-value">4</div>
-      <div class="rating-value">5</div>
+      <div class="rating-value" tabindex="0">0</div>
+      <div class="rating-value" tabindex="0">1</div>
+      <div class="rating-value" tabindex="0">2</div>
+      <div class="rating-value" tabindex="0">3</div>
+      <div class="rating-value" tabindex="0">4</div>
+      <div class="rating-value" tabindex="0">5</div>
       <br>
       <textarea class="comment" name="comment" cols="40" rows="5"></textarea>
       </div>`);
