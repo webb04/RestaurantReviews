@@ -51,7 +51,7 @@ $('.location').keypress(function(e){
 
 let fetchRestaurants = (selectedLocation, selectedCuisine) => {
   console.log(selectedLocation, selectedCuisine);
-  document.getElementById('results').innerHTML = '<img src="/dist/img/ring.svg"/>';
+  document.getElementById('results').innerHTML = '<img src="/dist/img/ring.svg" alt="fetching results"/>';
   var request = '/api/'+ selectedLocation + '?cuisine=' + selectedCuisine;
   fetch(request).then(function(response) {
     return response.json();
