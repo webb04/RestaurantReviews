@@ -9,10 +9,10 @@ let locationID = {
 };
 
 let cuisineID = {
-  "Italian": 55,
-  "American": 1,
-  "British": 133,
-  "Indian": 148
+  "italian": 55,
+  "american": 1,
+  "british": 133,
+  "indian": 148
 };
 
 $('.location').on('click', function(e) {
@@ -23,8 +23,10 @@ $('.location').on('click', function(e) {
 });
 
 $('.cuisine').on('click', function(e) {
-  selectedCuisine = e.target.innerHTML;
+  selectedCuisine = e.target.innerHTML.toLowerCase().trim();
+  console.log("selected cuisine - " + selectedCuisine);
   selectedCuisine = cuisineID[selectedCuisine];
+  console.log("selected cuisine - " + selectedCuisine);
   $('.cuisine').removeClass('selected-cuisine');
   $(e.target).parent().addClass('selected-cuisine');
   if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
@@ -41,7 +43,8 @@ $('.location').keypress(function(e){
 
   $('.cuisine').keypress(function(e){
       if(e.which == 13){//Enter key pressed
-        selectedCuisine = $(this).attr('class').split(" ")[1];
+        console.log($(this).attr('class').split(" ")[1]);
+        selectedCuisine = $(this).attr('class').split(" ")[1].toLowerCase().trim();
         selectedCuisine = cuisineID[selectedCuisine];
         $('.cuisine').removeClass('selected-cuisine');
         $(this).addClass('selected-cuisine');
