@@ -18,17 +18,19 @@ let cuisineID = {
 $('.location').on('click', function(e) {
   selectedLocation = e.target.innerHTML;
   $('.location').removeClass('selected');
+  $('.location').attr('aria-checked', 'false');
   $(e.target).parent().parent().addClass('selected');
+  $(e.target).parent().parent().attr('aria-checked', 'true');
   if (selectedCuisine) fetchRestaurants(selectedLocation, selectedCuisine);
 });
 
 $('.cuisine').on('click', function(e) {
   selectedCuisine = e.target.innerHTML.toLowerCase().trim();
-  console.log("selected cuisine - " + selectedCuisine);
   selectedCuisine = cuisineID[selectedCuisine];
-  console.log("selected cuisine - " + selectedCuisine);
   $('.cuisine').removeClass('selected-cuisine');
+  $('.cuisine').attr('aria-checked', 'false');
   $(e.target).parent().addClass('selected-cuisine');
+  $(e.target).parent().attr('aria-checked', 'true');
   if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
 });
 
@@ -36,18 +38,21 @@ $('.location').keypress(function(e){
     if(e.which == 13){//Enter key pressed
       selectedLocation = $(this).attr('class').split(" ")[1];
       $('.location').removeClass('selected');
+      $('.location').attr('aria-checked', 'false');
       $(this).addClass('selected');
+      $(e.target).parent().parent().attr('aria-checked', 'true');
       if (selectedCuisine) fetchRestaurants(selectedLocation, selectedCuisine);
     }
   });
 
   $('.cuisine').keypress(function(e){
       if(e.which == 13){//Enter key pressed
-        console.log($(this).attr('class').split(" ")[1]);
         selectedCuisine = $(this).attr('class').split(" ")[1].toLowerCase().trim();
         selectedCuisine = cuisineID[selectedCuisine];
         $('.cuisine').removeClass('selected-cuisine');
+        $('.cuisine').attr('aria-checked', 'false');
         $(this).addClass('selected-cuisine');
+        $(e.target).parent().attr('aria-checked', 'true');
         if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
       }
     });
