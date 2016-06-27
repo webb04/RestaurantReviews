@@ -7,13 +7,6 @@ let filtered = null;
 let minimum = 0;
 let maximum = 130;
 
-let locationID = {
-  "London": 61,
-  "Birmingham": 69,
-  "Liverpool": 323,
-  "Manchester": 68
-};
-
 let cuisineID = {
   "italian": 55,
   "american": 1,
