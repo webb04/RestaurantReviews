@@ -98,8 +98,8 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
         <textarea class="comment" name="comment" cols="40" rows="5"></textarea>
       </div>
       <div class="reviews"></div>`;
-      document.getElementById(x.restaurant.featured_image).style.backgroundImage = `url('${x.restaurant.featured_image}')`
-    });
+        document.getElementById(x.restaurant.featured_image).style.backgroundImage = `url('${x.restaurant.featured_image}'), url('/dist/img/default.jpg')`
+  });
 
     fetchReviews();
 
