@@ -17,13 +17,21 @@ header {
   border-bottom: solid 1px rgba(119, 136, 153, 0.2);
 }
 
+.instructions {
+  margin: 50px;
+}
+
+.already-voted {
+  margin-top: 20px;
+}
+
 .cuisine {
   border: solid 1px rgba(119, 136, 153, 0.2);
   box-sizing: border-box;
 }
 
 .location {
-  opacity: 0.35;
+  // opacity: 0.35;
 }
 
 .location, .cuisine {
@@ -35,6 +43,7 @@ header {
 .location:hover {
   opacity: 1;
   cursor: pointer;
+  background: rgba(47, 79, 79, 0.7);
 }
 
 .cuisine:hover {
@@ -45,7 +54,8 @@ header {
 }
 
 .selected {
-  opacity: 1;
+  background: darkslategrey !important;
+  color: white;
 }
 
 .selected-cuisine {
@@ -59,6 +69,15 @@ header {
   width: 80%;
   margin: 0px;
   text-align: center;
+}
+
+section {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+h2 {
+  margin-bottom: 5px;
 }
 
 .restaurant-image {
@@ -152,23 +171,23 @@ textarea {
 }
 
 .london {
-    background-image: url('/dist/img/London.jpg');
-    background-size: cover;
+    // background-image: url('/dist/img/London.jpg');
+    // background-size: cover;
 }
 
 .birmingham {
-    background-image: url('/dist/img/Birmingham.jpg');
-    background-size: cover;
+    // background-image: url('/dist/img/Birmingham.jpg');
+    // background-size: cover;
 }
 
 .liverpool {
-    background-image: url('/dist/img/Liverpool.jpg');
-    background-size: cover;
+    // background-image: url('/dist/img/Liverpool.jpg');
+    // background-size: cover;
 }
 
 .manchester {
-    background-image: url('/dist/img/Manchester.jpg');
-    background-size: cover;
+    // background-image: url('/dist/img/Manchester.jpg');
+    // background-size: cover;
 }
 
 .already-voted {
@@ -181,6 +200,8 @@ textarea {
 
 #filter {
   text-align: center;
+  margin-top: 50px;
+
 }
 
 .restaurant span, .price {
@@ -197,7 +218,7 @@ textarea {
 
 .review-wrapper span {
     margin-right: 5px;
-    color: lightslategray;
+    color: darkslategray;
     font-size: 0.6em;
     font-weight: 100;
 }
@@ -206,17 +227,25 @@ textarea {
   height: 100%;
   width: 100%;
   position: relative;
-  background: rgba(47, 79, 79, 0.7);
-  color: white;
+  // background: rgba(47, 79, 79, 1);
+  // color: white;
+  // background: white;
   line-height: 100px;
   float: left;
   text-align: center;
   opacity: 1;
-  text-shadow: 2px 2px darkslategrey;
+  // text-shadow: 2px 2px darkslategrey;
+  border: solid 1px rgba(119,136,153,0.2);
+  box-sizing: border-box;
 
   p {
     margin: 0px;
   }
+}
+
+.dim:hover {
+  background: rgba(47, 79, 79, 0.8);
+  color: white;
 }
 
 .cuisine-name {

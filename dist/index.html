@@ -9,71 +9,67 @@
       <link href="https://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
       <link rel="stylesheet" href="css/main.css">
+      <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+      <meta name="theme-color" content="#2F4F4F">
+      <link rel="apple-touch-icon" href="img/default.jpg">
     </head>
     <body>
       <header class="main-header">
-        <h1 id="title">Restaurant Reviews</h1>
+        <h1 role="heading" aria-level="1" id="title">Restaurant Reviews</h1>
       </header>
-      <br>
-      <br>
-      <p>
-        Please select a location and cuisine
-      </p>
-      <br>
+      <main>
+        <section>
+          <h2 role="heading" aria-level="2">Select location</h2>
+          <div class="location london" tabindex="0" role="checkbox" aria-checked="false">
+            <div class="dim">
+              <p>London</p>
+            </div>
+          </div>
+          <div class="location birmingham" tabindex="0" role="checkbox" aria-checked="false">
+            <div class="dim">
+              <p>Birmingham</p>
+            </div>
+          </div>
+          <div class="location liverpool" tabindex="0" role="checkbox" aria-checked="false">
+            <div class="dim">
+              <p>liverpool</p>
+            </div>
+          </div>
+          <div class="location manchester" tabindex="0" role="checkbox" aria-checked="false">
+            <div class="dim">
+              <p>Manchester</p>
+            </div>
+          </div>
+        </section>
 
-      <section>
-        <div class="location london" tabindex="0" role="checkbox" aria-checked="false">
-          <div class="dim">
-            <p>London</p>
+        <section>
+          <h2 role="heading" aria-level="2">Select cuisine</h2>
+          <div class="cuisine italian" tabindex="0" role="checkbox" aria-checked="false">
+            <p class="cuisine-name">
+              Italian
+            </p>
           </div>
-        </div>
-        <div class="location birmingham" tabindex="0" role="checkbox" aria-checked="false">
-          <div class="dim">
-            <p>Birmingham</p>
+          <div class="cuisine american" tabindex="0" role="checkbox" aria-checked="false">
+            <p class="cuisine-name">
+              American
+            </p>
           </div>
-        </div>
-        <div class="location liverpool" tabindex="0" role="checkbox" aria-checked="false">
-          <div class="dim">
-            <p>liverpool</p>
+          <div class="cuisine british" tabindex="0" role="checkbox" aria-checked="false">
+            <p class="cuisine-name">
+              British
+            </p>
           </div>
-        </div>
-        <div class="location manchester" tabindex="0" role="checkbox" aria-checked="false">
-          <div class="dim">
-            <p>Manchester</p>
+          <div class="cuisine indian" tabindex="0" role="checkbox" aria-checked="false">
+            <p class="cuisine-name">
+              Indian
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section>
-        <div class="cuisine italian" tabindex="0" role="checkbox" aria-checked="false">
-          <p class="cuisine-name">
-            Italian
-          </p>
-        </div>
-        <div class="cuisine american" tabindex="0" role="checkbox" aria-checked="false">
-          <p class="cuisine-name">
-            American
-          </p>
-        </div>
-        <div class="cuisine british" tabindex="0" role="checkbox" aria-checked="false">
-          <p class="cuisine-name">
-            British
-          </p>
-        </div>
-        <div class="cuisine indian" tabindex="0" role="checkbox" aria-checked="false">
-          <p class="cuisine-name">
-            Indian
-          </p>
-        </div>
-      </section>
-
-      <br>
-      <br>
-      <div id="filter"></div>
-      <br>
-      <br>
-      <div id="results"></div>
-      <script src="js/moment-with-locales.js"></script>
-      <script src="js/all.js"></script>
+        <section id="filter"></section>
+        <section id="results"></section>
+      <main>
     </body>
+    <script src="js/moment-with-locales.js"></script>
+    <script src="js/all.js"></script>
 </html>
