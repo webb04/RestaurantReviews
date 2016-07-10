@@ -81,6 +81,7 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
     restaurants.map(x => {
       x.restaurant.formattedname = x.restaurant.name.replace("'", "");
       document.getElementById('results').innerHTML += `<div class="restaurant"><div class="restaurant-image" id="${x.restaurant.featured_image}"></div>
+    <label style="display: none" for="${x.restaurant.featured_image}">${x.restaurant.name}</label>
     <div class="restaurant-name">${x.restaurant.name}</div>
     <div class="rating" style="background: #${x.restaurant.user_rating.rating_color}">${x.restaurant.user_rating.aggregate_rating}</div>
       <div class="votes">${x.restaurant.user_rating.votes} votes</div>
