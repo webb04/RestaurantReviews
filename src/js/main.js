@@ -4,6 +4,8 @@ let voted = [];
 let restaurants = null;
 let filtered = null;
 
+let selectedRating = null;
+
 let minimum = 0;
 let maximum = 130;
 
@@ -85,6 +87,7 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
       <div class="opening-times">12:00 - 23:00</div>
       <span>Average price for two: £</span>
       <div class="price">${x.restaurant.average_cost_for_two}</div>
+      <div>${x.restaurant.location.address}</div>
       <div class="new-review" style="display: none" name="${x.restaurant.formattedname}"></div>
       <div class="ratings-wrapper">
         <div class='rating-value' onclick='updateRating(0, "${x.restaurant.formattedname}")' tabindex='0'>0</div>
@@ -95,9 +98,12 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
         <div class='rating-value' onclick='updateRating(5, "${x.restaurant.formattedname}")' tabindex='0'>5</div>
         <br>
         <p class="already-voted"></p>
-        <textarea class="comment" name="comment" cols="40" rows="5"></textarea>
       </div>
-      <div class="reviews"></div>`;
+      <div class="reviews"></div>
+      <div class="review-wrapper">
+          <textarea placeholder="Leave a comment" class="comment" cols="40" rows="3" name='${x.restaurant.name}'></textarea>
+          <button onclick="addComment('${x.restaurant.name}')">Submit</button>
+      </div>`;
         document.getElementById(x.restaurant.featured_image).style.backgroundImage = `url('${x.restaurant.featured_image}'), url('/dist/img/default.jpg')`
   });
 
@@ -115,6 +121,7 @@ let updateRating = (newVote, name) => {
   if (voted.indexOf(name) > -1) {
 
   } else {
+    selectedRating = newVote;
     let rating = $(`div[name='${name}']`).parent().find('.rating')[0].innerHTML;
     let numberOfVotes = $(`div[name='${name}']`).parent().find('.votes')[0].innerHTML;
     rating = parseFloat(rating);
@@ -122,7 +129,7 @@ let updateRating = (newVote, name) => {
     let newRating = ((rating * numberOfVotes) + newVote) / ++numberOfVotes;
     $(`div[name='${name}']`).parent().find('.rating')[0].innerHTML = newRating.toFixed(1);
     $(`div[name='${name}']`).parent().find('.votes')[0].innerHTML = numberOfVotes;
-    $(`div[name='${name}']`).parent().find('.already-voted')[0].innerHTML = "You have submitted a review for this restaurant";
+    $(`div[name='${name}']`).parent().find('.already-voted')[0].innerHTML = "You have submitted a rating for this restaurant";
     voted.push(name);
   }
 }
@@ -135,13 +142,30 @@ let fetchReviews = () => {
     var restaurants = document.querySelectorAll('.restaurant');
 
     for( var index=0; index < restaurants.length; index++ ) {
-      var comments = Math.round((Math.random() * 3));
+      var comments = Math.round((Math.random() * 3) + 1);
       for (var i = 0; i < comments; i++) {
         var item = json[Math.floor(Math.random()*json.length)];
         restaurants[index].getElementsByClassName('reviews')[0].innerHTML += `<div class="review-wrapper"><div><span>${item.name}, </span><span>${item.date}, </span><span>${item.rating}</span></div>${item.review}</div>`;
       }
     }
   });
+}
+
+let addComment = (restaurant) => {
+  let text = $(`textarea[name='${restaurant}']`);
+  console.log(text.val());
+  if (text.val() != "") {
+    text.parent().prev().append(`<div class="review-wrapper">
+    <div>
+      <span>Logged in user, </span>
+      <span>${moment().format('DD/MM/YYYY')}, </span>
+      <span>${selectedRating || 'Rating not given'}</span>
+    </div>
+    ${text.val()}
+    </div>`)
+    // text.next().hide();
+    text.parent().hide();
+  }
 }
 
 function minRatingUpdate(min) {

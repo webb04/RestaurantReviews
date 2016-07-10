@@ -127,13 +127,28 @@ header {
 
 .comment {
   border: solid 1px rgba(119,136,153,0.2);
-  width: 400px;
+  width: 80%;
   margin-top: 20px;
+  font-size: 24px;
+  padding: 10px;
+}
+
+.review-wrapper button {
+  display: block;
+  margin: auto;
+  font-size: 0.7em;
+  background: none;
+  border: solid 1px rgba(119,136,153,0.2);
+  padding: 10px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 textarea {
   resize: none;
-  display: none;
+  // display: none;
 }
 
 .london {
