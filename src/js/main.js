@@ -20,6 +20,7 @@ $('.location').on('click', function(e) {
   selectedLocation = e.target.innerHTML;
   $('.location').removeClass('selected');
   $('.location').attr('aria-checked', 'false');
+  console.log(e.target);
   $(e.target).parent().parent().addClass('selected');
   $(e.target).parent().parent().attr('aria-checked', 'true');
   if (selectedCuisine) fetchRestaurants(selectedLocation, selectedCuisine);
@@ -30,6 +31,7 @@ $('.cuisine').on('click', function(e) {
   selectedCuisine = cuisineID[selectedCuisine];
   $('.cuisine').removeClass('selected-cuisine');
   $('.cuisine').attr('aria-checked', 'false');
+  console.log(e.target);
   $(e.target).parent().addClass('selected-cuisine');
   $(e.target).parent().attr('aria-checked', 'true');
   if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
@@ -41,7 +43,8 @@ $('.location').keypress(function(e){
       $('.location').removeClass('selected');
       $('.location').attr('aria-checked', 'false');
       $(this).addClass('selected');
-      $(e.target).parent().parent().attr('aria-checked', 'true');
+      console.log(e.target);
+      $(e.target).attr('aria-checked', 'true');
       if (selectedCuisine) fetchRestaurants(selectedLocation, selectedCuisine);
     }
   });
@@ -53,7 +56,8 @@ $('.location').keypress(function(e){
         $('.cuisine').removeClass('selected-cuisine');
         $('.cuisine').attr('aria-checked', 'false');
         $(this).addClass('selected-cuisine');
-        $(e.target).parent().attr('aria-checked', 'true');
+        console.log(e.target);
+        $(e.target).attr('aria-checked', 'true');
         if (selectedLocation) fetchRestaurants(selectedLocation, selectedCuisine);
       }
     });
@@ -81,7 +85,7 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
     restaurants.map(x => {
       x.restaurant.formattedname = x.restaurant.name.replace("'", "");
       if (document.getElementById(`${x.restaurant.formattedname}`) == null) {
-        document.getElementById('results').innerHTML += `<div class="restaurant"><div class="restaurant-image" tabindex='0' role="img" id="${x.restaurant.featured_image}"></div>
+        document.getElementById('results').innerHTML += `<article class="restaurant"><div class="restaurant-image" tabindex='0' role="img" aria-label="${x.restaurant.name}" id="${x.restaurant.featured_image}"></div>
         <label style="display: none" for="${x.restaurant.featured_image}">${x.restaurant.name}</label>
         <div class="restaurant-name" id="${x.restaurant.formattedname}">${x.restaurant.name}</div>
         <div class="rating" style="border: solid 5px #${x.restaurant.user_rating.rating_color}">${x.restaurant.user_rating.aggregate_rating}</div>
@@ -93,8 +97,9 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
         <div class="new-review" style="display: none" name="${x.restaurant.formattedname}"></div>
         <div class="reviews"></div>
         <div class="review-wrapper">
-          <input type="text" placeholder="First name" name='${x.restaurant.formattedname}'></input>
-          <input type="text" placeholder="Last name" name='${x.restaurant.formattedname}'></input>
+          <h2 role="heading" aria-level="2">Leave a review for ${x.restaurant.name}</h2>
+          <input type="text" role="textbox" aria-label="First name" tabindex='0' placeholder="First name" name='${x.restaurant.formattedname}'></input>
+          <input type="text" role="textbox" aria-label="Last name" tabindex='0' placeholder="Last name" name='${x.restaurant.formattedname}'></input>
           <textarea aria-label="Leave a review" role="textbox" aria-multiline="true" placeholder="Leave a comment" class="comment" cols="40" rows="3" name='${x.restaurant.formattedname}'></textarea>
           <div class="ratings-wrapper">
             <div class='rating-value' role="button" aria-label="0" onclick='updateRating(0, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(0, "${x.restaurant.formattedname}", event)' tabindex='0'>0</div>
@@ -104,9 +109,10 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
             <div class='rating-value' role="button" aria-label="4" onclick='updateRating(4, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(4, "${x.restaurant.formattedname}", event)' tabindex='0'>4</div>
             <div class='rating-value' role="button" aria-label="5" onclick='updateRating(5, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(5, "${x.restaurant.formattedname}", event)' tabindex='0'>5</div>
             <p class="already-voted"></p>
+            <p class="chosenrating" id="${x.restaurant.formattedname}chosenrating"></p>
           </div>
           <button onclick="addComment('${x.restaurant.formattedname}')">Submit</button>
-        </div>`;
+        </article>`;
         document.getElementById(x.restaurant.featured_image).style.backgroundImage = `url('${x.restaurant.featured_image}'), url('/dist/img/default.jpg')`
       }
 
@@ -124,11 +130,13 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
 
 let updateRating = (newVote, name) => {
   selectedRating[name] = newVote;
+  document.getElementById(`${name}chosenrating`).innerHTML = newVote;
 }
 
 let updateRatingKeypress = (newVote, name, e) => {
   if (e.which == 13){//Enter key pressed
     selectedRating[name] = newVote;
+    document.getElementById(`${name}chosenrating`).innerHTML = newVote;
   }
 }
 
@@ -176,11 +184,15 @@ let addComment = (restaurant) => {
 
   if (invalid) { return; }
 
+  if (selectedRating[restaurant] == null || selectedRating[restaurant] == 'undefined') {
+    selectedRating[restaurant] = "User rating not given";
+  }
+
   text.parent().prev().append(`<div class="review-wrapper">
   <div>
     <span>${first} ${last}, </span>
     <span>${moment().format('DD/MM/YYYY')}, </span>
-    <span>${selectedRating[restaurant] || 'Rating not given'}</span>
+    <span>${selectedRating[restaurant]}</span>
   </div>
   ${text.val()}
   </div>`)
