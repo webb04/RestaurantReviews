@@ -4,7 +4,7 @@ let voted = [];
 let restaurants = null;
 let filtered = null;
 
-let selectedRating = null;
+let selectedRating = {};
 
 let minimum = 0;
 let maximum = 130;
@@ -61,12 +61,12 @@ $('.location').keypress(function(e){
 let fetchRestaurants = (selectedLocation, selectedCuisine) => {
 
   document.getElementById('filter').innerHTML = `<h2 role="heading" aria-level="2">Filter</h2><label for="fader1">Minimum rating</label><br>
-<input type="range" min="0" max="5" value="0" id="fader1"
+<input tabindex="0" type="range" min="0" max="5" value="0" id="fader1"
 	step="0.1" oninput="minRatingUpdate(value)"><br>
   <output for="fader1" id="min-rating">0</output><br>`
 
   document.getElementById('filter').innerHTML += `<label for="fader2">Maximum average spend for two</label><br>
-<input type="range" min="10" max="130" value="130" id="fader2"
+<input tabindex="0" type="range" min="10" max="130" value="130" id="fader2"
 	step="5" oninput="maxAverageSpendUpdate(value)"><br>
   <span>£</span><output for="fader2" id="max-average-spend">130</output>`
 
@@ -80,31 +80,36 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
     document.getElementById('results').innerHTML = '';
     restaurants.map(x => {
       x.restaurant.formattedname = x.restaurant.name.replace("'", "");
-      document.getElementById('results').innerHTML += `<div class="restaurant"><div class="restaurant-image" tabindex='0' role="img" id="${x.restaurant.featured_image}"></div>
-    <label style="display: none" for="${x.restaurant.featured_image}">${x.restaurant.name}</label>
-    <div class="restaurant-name">${x.restaurant.name}</div>
-    <div class="rating" style="background: #${x.restaurant.user_rating.rating_color}">${x.restaurant.user_rating.aggregate_rating}</div>
-      <div class="votes">${x.restaurant.user_rating.votes} votes</div>
-      <div class="opening-times">12:00 - 23:00</div>
-      <span>Average price for two: £</span>
-      <div class="price">${x.restaurant.average_cost_for_two}</div>
-      <div>${x.restaurant.location.address}</div>
-      <div class="new-review" style="display: none" name="${x.restaurant.formattedname}"></div>
-      <div class="ratings-wrapper">
-        <div class='rating-value' role="button" aria-label="0" onclick='updateRating(0, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(0, "${x.restaurant.formattedname}", event)' tabindex='0'>0</div>
-        <div class='rating-value' role="button" aria-label="1" onclick="updateRating(1, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(1, "${x.restaurant.formattedname}", event)' tabindex='0'>1</div>
-        <div class='rating-value' role="button" aria-label="2" onclick='updateRating(2, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(2, "${x.restaurant.formattedname}", event)' tabindex='0'>2</div>
-        <div class='rating-value' role="button" aria-label="3" onclick='updateRating(3, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(3, "${x.restaurant.formattedname}", event)' tabindex='0'>3</div>
-        <div class='rating-value' role="button" aria-label="4" onclick='updateRating(4, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(4, "${x.restaurant.formattedname}", event)' tabindex='0'>4</div>
-        <div class='rating-value' role="button" aria-label="5" onclick='updateRating(5, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(5, "${x.restaurant.formattedname}", event)' tabindex='0'>5</div>
-        <p class="already-voted"></p>
-      </div>
-      <div class="reviews"></div>
-      <div class="review-wrapper">
-          <textarea aria-label="Leave a review" role="textbox" aria-multiline="true" placeholder="Leave a comment" class="comment" cols="40" rows="3" name='${x.restaurant.name}'></textarea>
-          <button onclick="addComment('${x.restaurant.name}')">Submit</button>
-      </div>`;
+      if (document.getElementById(`${x.restaurant.formattedname}`) == null) {
+        document.getElementById('results').innerHTML += `<div class="restaurant"><div class="restaurant-image" tabindex='0' role="img" id="${x.restaurant.featured_image}"></div>
+        <label style="display: none" for="${x.restaurant.featured_image}">${x.restaurant.name}</label>
+        <div class="restaurant-name" id="${x.restaurant.formattedname}">${x.restaurant.name}</div>
+        <div class="rating" style="border: solid 5px #${x.restaurant.user_rating.rating_color}">${x.restaurant.user_rating.aggregate_rating}</div>
+        <div class="votes">${x.restaurant.user_rating.votes} votes</div>
+        <div class="opening-times">12:00 - 23:00</div>
+        <span>Average price for two: £</span>
+        <div class="price">${x.restaurant.average_cost_for_two}</div>
+        <div>${x.restaurant.location.address}</div>
+        <div class="new-review" style="display: none" name="${x.restaurant.formattedname}"></div>
+        <div class="reviews"></div>
+        <div class="review-wrapper">
+          <input type="text" placeholder="First name" name='${x.restaurant.formattedname}'></input>
+          <input type="text" placeholder="Last name" name='${x.restaurant.formattedname}'></input>
+          <textarea aria-label="Leave a review" role="textbox" aria-multiline="true" placeholder="Leave a comment" class="comment" cols="40" rows="3" name='${x.restaurant.formattedname}'></textarea>
+          <div class="ratings-wrapper">
+            <div class='rating-value' role="button" aria-label="0" onclick='updateRating(0, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(0, "${x.restaurant.formattedname}", event)' tabindex='0'>0</div>
+            <div class='rating-value' role="button" aria-label="1" onclick="updateRating(1, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(1, "${x.restaurant.formattedname}", event)' tabindex='0'>1</div>
+            <div class='rating-value' role="button" aria-label="2" onclick='updateRating(2, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(2, "${x.restaurant.formattedname}", event)' tabindex='0'>2</div>
+            <div class='rating-value' role="button" aria-label="3" onclick='updateRating(3, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(3, "${x.restaurant.formattedname}", event)' tabindex='0'>3</div>
+            <div class='rating-value' role="button" aria-label="4" onclick='updateRating(4, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(4, "${x.restaurant.formattedname}", event)' tabindex='0'>4</div>
+            <div class='rating-value' role="button" aria-label="5" onclick='updateRating(5, "${x.restaurant.formattedname}")' onkeypress='updateRatingKeypress(5, "${x.restaurant.formattedname}", event)' tabindex='0'>5</div>
+            <p class="already-voted"></p>
+          </div>
+          <button onclick="addComment('${x.restaurant.formattedname}')">Submit</button>
+        </div>`;
         document.getElementById(x.restaurant.featured_image).style.backgroundImage = `url('${x.restaurant.featured_image}'), url('/dist/img/default.jpg')`
+      }
+
   });
 
     fetchReviews();
@@ -118,39 +123,14 @@ let fetchRestaurants = (selectedLocation, selectedCuisine) => {
 
 
 let updateRating = (newVote, name) => {
-  if (voted.indexOf(name) > -1) {
-
-  } else {
-    selectedRating = newVote;
-    let rating = $(`div[name='${name}']`).parent().find('.rating')[0].innerHTML;
-    let numberOfVotes = $(`div[name='${name}']`).parent().find('.votes')[0].innerHTML;
-    rating = parseFloat(rating);
-    numberOfVotes = parseInt(numberOfVotes);
-    let newRating = ((rating * numberOfVotes) + newVote) / ++numberOfVotes;
-    $(`div[name='${name}']`).parent().find('.rating')[0].innerHTML = newRating.toFixed(1);
-    $(`div[name='${name}']`).parent().find('.votes')[0].innerHTML = numberOfVotes;
-    $(`div[name='${name}']`).parent().find('.already-voted')[0].innerHTML = "You have submitted a rating for this restaurant";
-    voted.push(name);
-  }
+  selectedRating[name] = newVote;
 }
 
 let updateRatingKeypress = (newVote, name, e) => {
-  if (voted.indexOf(name) > -1) {
-
-  } else {
-    if (e.which == 13){//Enter key pressed
-      selectedRating = newVote;
-      let rating = $(`div[name='${name}']`).parent().find('.rating')[0].innerHTML;
-      let numberOfVotes = $(`div[name='${name}']`).parent().find('.votes')[0].innerHTML;
-      rating = parseFloat(rating);
-      numberOfVotes = parseInt(numberOfVotes);
-      let newRating = ((rating * numberOfVotes) + newVote) / ++numberOfVotes;
-      $(`div[name='${name}']`).parent().find('.rating')[0].innerHTML = newRating.toFixed(1);
-      $(`div[name='${name}']`).parent().find('.votes')[0].innerHTML = numberOfVotes;
-      $(`div[name='${name}']`).parent().find('.already-voted')[0].innerHTML = "You have submitted a rating for this restaurant";
-      voted.push(name);
-    }
-  }}
+  if (e.which == 13){//Enter key pressed
+    selectedRating[name] = newVote;
+  }
+}
 
 let fetchReviews = () => {
   var json;
@@ -171,19 +151,50 @@ let fetchReviews = () => {
 
 let addComment = (restaurant) => {
   let text = $(`textarea[name='${restaurant}']`);
-  console.log(text.val());
-  if (text.val() != "") {
-    text.parent().prev().append(`<div class="review-wrapper">
-    <div>
-      <span>Logged in user, </span>
-      <span>${moment().format('DD/MM/YYYY')}, </span>
-      <span>${selectedRating || 'Rating not given'}</span>
-    </div>
-    ${text.val()}
-    </div>`)
-    // text.next().hide();
-    text.parent().hide();
+  let first = $(`input[name='${restaurant}']`)[0].value;
+  let last = $(`input[name='${restaurant}']`)[1].value;
+  let invalid = false;
+  $(`textarea[name='${restaurant}']`).removeClass('invalid');
+  $(`input[name='${restaurant}']`).first().removeClass('invalid');
+  $(`input[name='${restaurant}']`).first().next().removeClass('invalid');
+
+
+  if (text.val() == "") {
+    $(`textarea[name='${restaurant}']`).addClass('invalid');
+    invalid = true;
   }
+
+  if (first == "") {
+    $(`input[name='${restaurant}']`).first().addClass('invalid');
+    invalid = true;
+  }
+
+  if (last == "") {
+    $(`input[name='${restaurant}']`).first().next().addClass('invalid');
+    invalid = true;
+  }
+
+  if (invalid) { return; }
+
+  text.parent().prev().append(`<div class="review-wrapper">
+  <div>
+    <span>${first} ${last}, </span>
+    <span>${moment().format('DD/MM/YYYY')}, </span>
+    <span>${selectedRating[restaurant] || 'Rating not given'}</span>
+  </div>
+  ${text.val()}
+  </div>`)
+  text.parent().hide();
+
+  let rating = $(`div[name='${restaurant}']`).parent().parent().find('.rating')[0].innerHTML;
+  let numberOfVotes = $(`div[name='${restaurant}']`).parent().parent().find('.votes')[0].innerHTML;
+  rating = parseFloat(rating);
+  numberOfVotes = parseInt(numberOfVotes);
+  let newRating = ((rating * numberOfVotes) + selectedRating[restaurant]) / ++numberOfVotes;
+  $(`div[name='${restaurant}']`).parent().parent().find('.rating')[0].innerHTML = newRating.toFixed(1);
+  $(`div[name='${restaurant}']`).parent().parent().find('.votes')[0].innerHTML = numberOfVotes;
+  $(`div[name='${restaurant}']`).parent().parent().find('.already-voted')[0].innerHTML = "You have submitted a rating for this restaurant";
+  voted.push(restaurant);
 }
 
 function minRatingUpdate(min) {
